@@ -1,0 +1,87 @@
+
+{% extends 'base.html' %}
+
+{% block head %}
+<title> TASK MASTER </title>
+<style>
+
+    .content {
+        border: 1px solid #ccc;
+        width: 50%;
+        margin: 25px auto 25px auto;
+        border-radius: 5px;
+    }
+
+    table {
+        margin-left: auto;
+        margin-right: auto;
+        table-layout: fixed;
+        width: 100%;
+    }
+
+    table, th, td {
+        border: 1px solid black;
+        border-collapse: collapse;
+    }
+
+    tr {
+        height: 30px;
+    }
+
+    td, th {
+        text-align: center;
+        padding: 5px;
+    }
+
+    .form {
+        margin-top: 20px;
+        margin-left: 70px;
+    }
+
+    #content {
+        width: 70%;
+    }
+
+    #thumbnail {
+        box-shadow: 0 10px 20px rgba(0,0,0,0.19), 0 6px 6px rgba(0,0,0,0.23);
+    }
+
+    #button-magic {
+        margin-top: 10px;
+    }
+
+</style>
+{% endblock %}
+
+{% block body %}
+<div class="content" id="">
+    <h1 style="text-align: center;"> TASK MASTER </h1>
+    {% if tasks|length < 1 %}
+        <h4 style="text-align: center;">There are no tasks. Create one below!</h4>
+    {% else %}
+    <table>
+        <tr>
+            <th>TASK</th>
+            <th>ADDED</th>
+            <th>ACTIONS</th>
+        </tr>
+         {% for task in tasks %}
+            <tr>
+                <td>{{ task.content }}</td>
+                <td>{{ task.date_created.date() }}</td>
+                <td>
+                    <a href="/delete/{{ task.id }}">DELETE</a>
+                    <br>
+                    <a href="/update/{{ task.id }}">UPDATE</a>
+                </td>
+            </tr>
+        {% endfor %}
+    </table>
+    {% endif %}
+    <form action="/" method="POST" class="form">
+        <input type="text" name="content" id="content">
+        <input type="submit" value="Add Task" id="button-magic">
+    </form>
+</div>
+
+{% endblock %}
